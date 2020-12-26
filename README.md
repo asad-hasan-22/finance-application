@@ -1,4 +1,4 @@
-# finance-app
+# Finance App
 
 ## Creators:
 Asad Hasan   (asad-hasan-22),
