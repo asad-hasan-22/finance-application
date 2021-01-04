@@ -3,9 +3,30 @@
 <html lang="en">
 <head>
     <title>Document</title>
+    <link rel="stylesheet" href="/static/css/profile.css">
 </head>
 <body>
-    <h1> Welcome {{user}} </h1>
-    <button onclick="window.location = 'http://localhost:5000/dropsession'" type="submit"> Logout </button>
+    <header> 
+        <nav>
+            <ul class="nav__links">
+                <li> <a href="http://localhost:5000/profile"> Overview </a> </li>
+                <li> <a href="#"> Analysis </a> </li>
+                <li> <a href="#"> Unknown </a> </li>
+                <li> <a href="#"> About </a> </li>
+            </ul>
+        </nav>
+        <p class="welcome"> Welcome {{user}} </p>
+        <button class="cta" onclick="window.location = 'http://localhost:5000/dropsession'" type="submit"> Logout </button>
+    </header>
+
+    <div class="container">
+        <div id="sidebar"> Sidebar </div>
+        <div id="content1"> Content1 </div>
+        <div id="content2"> Content2 </div>
+        <div id="content3"> Content3 </div>
+        <div id="footer"> Footer </div>
+
+    </div>
+   
 </body>
 </html>
