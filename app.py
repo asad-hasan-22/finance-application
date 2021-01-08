@@ -3,6 +3,21 @@ from flask_mysqldb import MySQL
 import os
 import yaml
 
+from pandas_datareader import data
+#from pandas_datareader.utils import RemoteDataError
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+from datetime import datetime
+
+from urllib.request import urlopen, Request
+from bs4 import BeautifulSoup
+import os
+import pandas as pd
+import matplotlib.pyplot as plt
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+
+
 app = Flask(__name__, template_folder='templates')
 app.secret_key = os.urandom(24)
 
@@ -15,6 +30,20 @@ app.config['MYSQL_DB'] = db['mysql_db']
 
 mysql = MySQL(app)
 
+
+
+
+labels = [
+    'JAN', 'FEB', 'MAR', 'APR',
+    'MAY', 'JUN', 'JUL', 'AUG',
+    'SEP', 'OCT', 'NOV', 'DEC'
+]
+
+values = [
+    967.67, 1190.89, 1079.75, 1349.19,
+    2328.91, 2504.28, 2873.83, 4764.87,
+    4349.29, 6458.30, 9907, 16297
+]
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -57,7 +86,25 @@ def index():
 @app.route('/profile')
 def profile():
     if g.user:
-        return render_template('profile.html', user=session['user'])
+        START_DATE = '2020-01-01'
+        END_DATE = str(datetime.now().strftime('%Y-%m-%d'))
+
+        ticker = 'GOOG'
+        STOCK = 'GOOG'
+        # Get data
+        stock_data = data.DataReader(ticker, 'yahoo', START_DATE, END_DATE)
+        print(stock_data)
+        adj_close = stock_data['Adj Close']
+        #return stock_data
+
+        # Make into list
+        close_price_list = stock_data['Close'].tolist()
+        #return close_price_list
+        
+
+        date_list = pd.date_range(start=START_DATE,end=END_DATE).strftime('%Y-%m-%d').tolist()
+        #print(date_list)
+        return render_template('profile.html', user=session['user'], date_list = date_list, close_price_list = close_price_list)
     return redirect(url_for('index'))
 
 
