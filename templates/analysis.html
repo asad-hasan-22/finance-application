@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/css/analysis.css">
+    <!--Chart js-->
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.2/Chart.min.js"></script>
+</head>
+<body>
+    <header> 
+        <nav>
+            <ul class="nav__links">
+                <li> <a href="http://localhost:5000/profile"> Overview </a> </li>
+                <li> <a href="http://localhost:5000/analysis"> Analysis </a> </li>
+                <li> <a href="#"> Unknown </a> </li>
+                <li> <a href="#"> About </a> </li>
+            </ul>
+        </nav>
+        <p class="welcome"> Welcome {{user}} </p>
+        <button class="cta" onclick="window.location = 'http://localhost:5000/dropsession'" type="submit"> Logout </button>
+    </header>
+
+    
+    <div class="split left">
+        <div class="centered">
+            <head>
+                <meta charset="utf-8" />
+                <title>Table Style</title>
+                <meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; width=device-width;">
+            </head>
+            
+            <body>
+            <div class="table-title">
+            <h3>Recent Negative Headlines</h3>
+            </div>
+            <table class="table-fill">
+            <thead>
+            <tr>
+            <th class="text-left">Date</th>
+            <th class="text-left">Headline</th>
+            </tr>
+            </thead>
+            <tbody class="table-hover">
+            <tr>
+            <td class="text-left">{{pos_date_1}}</td>
+            <td class="text-left">{{pos_sentiment_1}}</td>
+            </tr>
+            <tr>
+            <td class="text-left">{{pos_date_2}}</td>
+            <td class="text-left">{{pos_sentiment_2}}</td>
+            </tr>
+            <tr>
+            <td class="text-left">{{pos_date_3}}</td>
+            <td class="text-left">{{pos_sentiment_3}}</td>
+            </tr>
+            <tr>
+            <td class="text-left">{{pos_date_4}}</td>
+            <td class="text-left">{{pos_sentiment_4}}</td>
+            </tr>
+            <tr>
+            <td class="text-left">{{pos_date_5}}</td>
+            <td class="text-left">{{pos_sentiment_5}}</td>
+            </tr>
+            </tbody>
+            </table>
+              
+            
+              </body>
+        </div>
+      </div>
+      
+      <div class="split right">
+        <div class="centered">
+            <head>
+                <meta charset="utf-8" />
+                <title>Table Style</title>
+                <meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; width=device-width;">
+            </head>
+            
+            <body>
+                <div class="table-title">
+                <h3>Recent Positive Headlines</h3>
+                </div>
+                <table class="table-fill">
+                <thead>
+                <tr>
+                <th class="text-left">Date</th>
+                <th class="text-left">Headline</th>
+                </tr>
+                </thead>
+                <tbody class="table-hover">
+                <tr>
+                <td class="text-left">{{neg_date_1}}</td>
+                <td class="text-left">{{neg_sentiment_1}}</td>
+                </tr>
+                <tr>
+                <td class="text-left">{{neg_date_2}}</td>
+                <td class="text-left">{{neg_sentiment_2}}</td>
+                </tr>
+                <tr>
+                <td class="text-left">{{neg_date_3}}</td>
+                <td class="text-left">{{neg_sentiment_3}}</td>
+                </tr>
+                <tr>
+                <td class="text-left">{{neg_date_4}}</td>
+                <td class="text-left">{{neg_sentiment_4}}</td>
+                </tr>
+                <tr>
+                <td class="text-left">{{neg_date_5}}</td>
+                <td class="text-left">{{neg_sentiment_5}}</td>
+                </tr>
+                </tbody>
+                </table>
+                  
+                
+                  </body>
+        </div>
+      </div>
+</body>
+</html>

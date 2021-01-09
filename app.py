@@ -107,6 +107,102 @@ def profile():
         return render_template('profile.html', user=session['user'], date_list = date_list, close_price_list = close_price_list)
     return redirect(url_for('index'))
 
+@app.route('/analysis')
+def analysis():
+    if g.user:
+        ticker = 'GOOG'
+        tickerless_url = 'https://finviz.com/quote.ashx?t='
+
+        tickers = [ticker]
+        
+        for ticker in tickers:
+            url = tickerless_url + ticker
+            req = Request(url=url,headers={'user-agent': 'my-app/0.0.1'}) 
+            response = urlopen(req)
+            html = BeautifulSoup(response)
+            news_table = html.find(id='news-table')
+
+        news_list = []
+        
+        for x in news_table.findAll('tr'):
+            text = x.a.get_text() 
+            date_scrape = x.td.text.split()
+        
+            if len(date_scrape) == 1:
+                time = date_scrape[0]
+                    
+            else:
+                date = date_scrape[0]
+                time = date_scrape[1]
+            
+            news_list.append([ticker, date, time, text])
+            
+        vader = SentimentIntensityAnalyzer()
+        
+        cols = ['ticker', 'date', 'time', 'headline']
+        
+        news_df = pd.DataFrame(news_list, columns=cols)
+        
+        polarity = news_df['headline'].apply(vader.polarity_scores).tolist()
+        
+        polarity_df = pd.DataFrame(polarity)
+        
+        news_df = news_df.join(polarity_df, rsuffix='_ri''ght')
+        
+        news_df['date'] = pd.to_datetime(news_df.date).dt.date
+
+        
+        #news_df.sort_values(by=['compound'], inplace=True)    
+        
+        a = news_df['headline'].head()
+        
+        total = news_df['compound'].sum()
+        
+        news_df1 = news_df.sort_values(by=['compound'], ascending=False)
+        pos_sentiment_1 = news_df1['headline'][0]
+        pos_sentiment_2 = news_df1['headline'][1]
+        pos_sentiment_3 = news_df1['headline'][2]
+        pos_sentiment_4 = news_df1['headline'][3]
+        pos_sentiment_5 = news_df1['headline'][4] 
+        pos_date_1 = news_df1['date'][0]
+        pos_date_2 = news_df1['date'][1]
+        pos_date_3 = news_df1['date'][2]
+        pos_date_4 = news_df1['date'][3]
+        pos_date_5 = news_df1['date'][4]
+        print(news_df.head())
+
+        news_df2 = news_df.sort_values(by=['compound'], ascending=True)   
+        neg_sentiment_1 = news_df2['headline'][0]
+        neg_sentiment_2 = news_df2['headline'][1]
+        neg_sentiment_3 = news_df2['headline'][2]
+        neg_sentiment_4 = news_df2['headline'][3]
+        neg_sentiment_5 = news_df2['headline'][4]
+        neg_date_1 = news_df2['date'][0]
+        neg_date_2 = news_df2['date'][1]
+        neg_date_3 = news_df2['date'][2]
+        neg_date_4 = news_df2['date'][3]
+        neg_date_5 = news_df2['date'][4]
+        print(news_df.head())
+
+        #good_bad = 0
+        if total >= 0:
+            print('Good sentiment')
+            news_df.sort_values(by=['compound'], inplace=True, ascending=False)
+            print('Here are 5 news pieces backing this claim:')
+            print(news_df['headline'].head())
+        elif total <0:
+            print('Bad sentiment')
+            news_df.sort_values(by=['compound'], inplace=True)
+            print('Here are 5 news pieces backing this claim:')
+            print(news_df['headline'].head())
+        return render_template('analysis.html', user=session['user'], total = total,
+            pos_sentiment_1 = pos_sentiment_1, pos_sentiment_2 = pos_sentiment_2, pos_sentiment_3 = pos_sentiment_3, pos_sentiment_4 = pos_sentiment_4, pos_sentiment_5 = pos_sentiment_5,
+            pos_date_1 = pos_date_1, pos_date_2 = pos_date_2, pos_date_3 = pos_date_3, pos_date_4 = pos_date_4, pos_date_5 = pos_date_5,
+            neg_sentiment_1 = neg_sentiment_1, neg_sentiment_2 = neg_sentiment_2, neg_sentiment_3 = neg_sentiment_3, neg_sentiment_4 = neg_sentiment_4, neg_sentiment_5 = neg_sentiment_5,
+            neg_date_1 = neg_date_1, neg_date_2 = neg_date_2, neg_date_3 = neg_date_3, neg_date_4 = neg_date_4, neg_date_5 = neg_date_5)
+            
+    return redirect(url_for('index'))
+
 
 @app.before_request
 def before_request():
