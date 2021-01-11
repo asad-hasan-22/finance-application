@@ -157,7 +157,7 @@ def analysis():
 
         total = news_df['compound'].sum()
 
-        news_df1 = news_df.sort_values(by=['compound'], ascending=False)
+        news_df1 = news_df.sort_values(by=['compound'], ascending=False).reset_index(drop=True)
         pos_sentiment_1 = news_df1['headline'][0]
         pos_sentiment_2 = news_df1['headline'][1]
         pos_sentiment_3 = news_df1['headline'][2]
@@ -170,7 +170,7 @@ def analysis():
         pos_date_5 = news_df1['date'][4]
         print(news_df.head())
 
-        news_df2 = news_df.sort_values(by=['compound'], ascending=True)
+        news_df2 = news_df.sort_values(by=['compound'], ascending=True).reset_index(drop=True)
         neg_sentiment_1 = news_df2['headline'][0]
         neg_sentiment_2 = news_df2['headline'][1]
         neg_sentiment_3 = news_df2['headline'][2]

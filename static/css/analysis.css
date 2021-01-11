@@ -137,7 +137,7 @@ button:hover {
     width: 50%;
     position: fixed;
     z-index: -1;
-    top: 10%;
+    margin-top:20px;
     overflow-x: hidden;
     padding-top: 20px;
   }
@@ -194,6 +194,7 @@ div.table-title {
   max-width: 600px;
   padding:5px;
   width: 100%;
+  z-index: 100;
 }
 
 .table-title h3 {
@@ -204,6 +205,7 @@ div.table-title {
    font-family: "Roboto", helvetica, arial, sans-serif;
    text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
    text-transform:uppercase;
+   z-index: 100;
 }
 
 
