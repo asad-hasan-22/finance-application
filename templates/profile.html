@@ -22,7 +22,7 @@
     </header>
 
     <div class="container">
-        <div id="sidebar"> Sidebar {{date_list}} </div>
+        <div id="sidebar"> Sidebar {{date_list2}} </div>
 
 
         <div id="content1"> 
@@ -32,7 +32,7 @@
             var myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: {{date_list|tojson}},
+                    labels: {{date_list2|tojson}},
                     datasets: [{
                         label: 'Closing price',
                         data: {{close_price_list}},
@@ -74,8 +74,50 @@
 
 
         
-        <div id="content2"> Total: </div>
-
+        <div id="content2">  
+            <canvas id="myChart_line" width="2" height="2"> </canvas>
+            <script>
+            var ctx = document.getElementById('myChart_line').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: {{date_list3|tojson}},
+                    datasets: [{
+                        label: 'Closing price',
+                        data: {{close_price_list}},
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive:true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+            </script> </div>
+            
 
 
         <div id="content3"> 

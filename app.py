@@ -100,10 +100,24 @@ def profile():
         close_price_list = stock_data['Close'].tolist()
         # return close_price_list
 
-        date_list = pd.date_range(
-            start=START_DATE, end=END_DATE).strftime('%Y-%m-%d').tolist()
+        date_list = pd.date_range(start=START_DATE, end=END_DATE).strftime('%Y-%m-%d').tolist()
         # print(date_list)
-        return render_template('profile.html', user=session['user'], date_list=date_list, close_price_list=close_price_list)
+
+        # Removing weekends
+        datelist_series = pd.date_range(start=START_DATE,end=END_DATE).to_series()
+        datelist_removed_weekends = datelist_series[datelist_series.dt.dayofweek < 5]
+        date_list2 = datelist_removed_weekends.dt.strftime('%Y-%m-%d').tolist()
+
+        # Line graph
+        START_DATE2 = date_list2[0]
+        print(START_DATE2)
+        stock_data2 = data.DataReader(ticker, 'yahoo', START_DATE2, END_DATE)
+
+        datelist_series3 = pd.date_range(end = datetime.today(), periods = 10).to_series()
+        datelist_removed_weekends3 = datelist_series3[datelist_series3.dt.dayofweek < 5]
+        date_list3 = datelist_removed_weekends3.dt.strftime('%Y-%m-%d').tolist()
+        
+        return render_template('profile.html', user=session['user'], date_list2=date_list2, date_list3=date_list3, close_price_list=close_price_list)
     return redirect(url_for('index'))
 
 
